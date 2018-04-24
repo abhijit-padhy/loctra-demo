@@ -1,0 +1,199 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Raleway:700i');
+        body {
+            font-size: 24;
+            padding: 20px 40px;
+            font-family: 'Raleway', sans-serif;
+        }
+        .wrapper{
+            border: 1px solid #ccc;
+    padding: 20px;
+    width: 100%;
+    color: #888888;
+        }
+        .message{
+            padding: 30px 50px;
+            color: #ffffff;
+            background: #555;
+            border-radius: 5px;
+            margin-bottom: 22px;
+        } 
+        .data-container{
+           
+        }
+        .progress, .donation{
+            border: 2px solid #ddd;
+    border-radius: 0;
+        }
+        .progress{
+            margin-bottom: 0;
+            border-bottom: 0;
+        }
+        .progress-bar{
+            background: orangered !important;
+        }
+        .donation{
+            padding: 20px 40px 20px 20px;
+        }
+        .days-left a{
+            color: orangered;
+        }
+        .settings{
+            padding-top: 20px;
+        }
+        .glyphicon-play{
+            position: absolute;
+    z-index: 1;
+    top: 131px;
+    color: #888;
+    transform: rotate(90deg);
+        }
+        .give, .tell{
+            float: right;
+        }
+        .give{
+    background: #00BE1c;
+    padding: 20px;
+    font-weight: bold;
+    color: white;
+    font-size: 26px;
+    font-family: Arial, Helvetica, sans-serif;
+        }
+        .amount{
+            padding: 20px 40px;
+    font-weight: bold;
+    font-size: 26px;
+    background: white;
+    color: #888888;
+        }
+        .amount:hover, .amount:active{
+            background: white;
+        }
+        .amount input{
+            border: 0;
+            outline: none;
+        }
+        .save, .tell{
+            padding: 15px 30px;
+    font-size: 24px;
+    color: #888;
+    box-shadow: 1px 4px 1px #888;
+        }
+        .help{
+            color: #0EA0D6;
+        }
+    </style>
+</head>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+<body ng-app="app" ng-controller="ctrl">
+    <div class="wrapper">
+            <div class="message">
+                    <span>$167 still needed for this project</span>
+                    <span class="glyphicon glyphicon-play"></span>
+                </div>
+                <div class="data-container">
+                    <div class="donation-box">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="70" 
+                            aria-valuemin="0" aria-valuemax="100" style="width:0;">
+                                <span class="sr-only">70% Complete</span>
+                            </div>
+                        </div>
+                        <div class="donation">
+                            <div>
+                                <p class="days-left">
+                                    <a>Only 3 days left </a>to fund this project</p>
+                                <p class="donor-list">Join the
+                                    <b>42</b> other donors who have already supported this project. Every dollar helps.</p>
+                            </div>
+                            <div class="don-settings">
+                                <span class="btn btn-default amount">
+                                    <span>$</span>
+                                    <input type="text" ng-model="amount"></span>
+                                <input type="button" class="btn btn-default give"
+                                    ng-click="giveNow()" value="Give Now">
+                            </div>
+                            <div class="help">
+                                <a>Why give $50?</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings">
+                        <input type="button" class="btn btn-default save" value="Save for later" data-toggle="modal" data-target="#myModal">
+                        <input type="button" class="btn btn-default tell" 
+                           ng-click="tellFriends()" value="Tell your friends">
+                    </div>
+                </div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Saved.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+    </div>
+</body>
+<script>
+    var app = angular.module('app', []);
+    app.controller('ctrl', function ($scope) {
+        $scope.message = "hello";
+        $scope.amount = 50;
+        var total = 0;
+        // $(".progress-bar").css("width","60%");
+        $scope.giveNow = function(){
+            total += $scope.amount;
+            if(total <= 1000){
+                var progress = (total/10)+"%";
+                $(".progress-bar").css("width",progress);
+            }
+        };
+        $scope.tellFriends = function(){
+            FB.ui({
+    method: 'share',
+    display: 'popup',
+    href: 'https://developers.facebook.com/docs/',
+  }, function(response){});
+        }
+    });
+</script>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId            : '193907054559932',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v2.12'
+          });
+        };
+      
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "https://connect.facebook.net/en_US/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+      </script>
+</html>
